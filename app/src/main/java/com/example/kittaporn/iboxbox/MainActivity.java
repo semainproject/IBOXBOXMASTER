@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.Activity) {
             // Handle the camera action
         } else if (id == R.id.location) {
-
+            Intent i = new Intent(MainActivity.this,MapRealtime.class);
+            startActivity(i);
         } else if (id == R.id.History) {
 
         } else if (id == R.id.Hospital) {
