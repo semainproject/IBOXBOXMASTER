@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "317045417497",
+    "firebase_url": "https://iboxboxv1-a8f1b.firebaseio.com",
+    "project_id": "iboxboxv1-a8f1b",
+    "storage_bucket": "iboxboxv1-a8f1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317045417497:android:67269e42955788d9",
+        "android_client_info": {
+          "package_name": "com.example.kittaporn.iboxbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317045417497-3r16s7v4nt7lif9ahf9j5kipptu08p4h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kittaporn.iboxbox",
+            "certificate_hash": "747d246cc9d2d5a5567ae7ef7c61b01fe90966c6"
+          }
+        },
+        {
+          "client_id": "317045417497-b5nmi4g2fa9j880vuv9n06882mlkt6v9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDSVZ9vNXNaSkQ8MZwKJ6Hu7LghN6ycyk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317045417497-b5nmi4g2fa9j880vuv9n06882mlkt6v9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
