@@ -39,7 +39,8 @@
 
         <activity
             android:name=".MapRealtime"
-            android:label="@string/title_activity_map_realtime"></activity>
+            android:label="@string/title_activity_map_realtime" />
+        <activity android:name=".DogInformation"></activity>
     </application>
 
 </manifest>

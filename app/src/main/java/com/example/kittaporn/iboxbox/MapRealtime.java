@@ -49,7 +49,7 @@ public class MapRealtime extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+////54545454
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
