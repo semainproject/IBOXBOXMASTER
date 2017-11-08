@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "317045417497-b4vdv6dff4o76gdefdpa1unboc5pfhjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kittaporn.iboxbox",
+            "certificate_hash": "bb4ae085826fe43c4d88e29e58c0017069d5ddce"
+          }
+        },
+        {
           "client_id": "317045417497-3r16s7v4nt7lif9ahf9j5kipptu08p4h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
