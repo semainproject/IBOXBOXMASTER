@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MapRealtime extends FragmentActivity implements OnMapReadyCallback {
-    DatabaseReference myRef;
+    DatabaseReference myRef,db;
     private GoogleMap mMap;
 
     @Override
@@ -29,7 +29,8 @@ public class MapRealtime extends FragmentActivity implements OnMapReadyCallback 
         setContentView(R.layout.activity_map_realtime);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        myRef = FirebaseDatabase.getInstance().getReference(user.getUid().toString()).child("DOGID").child("001").child("REALLOCATION");
+        myRef = FirebaseDatabase.getInstance().getReference("USER").child(user.getUid()).child("device");
+        db = FirebaseDatabase.getInstance().getReference("DOGID");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -54,10 +55,24 @@ public class MapRealtime extends FragmentActivity implements OnMapReadyCallback 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LocationGetter locate = dataSnapshot.getValue(LocationGetter.class);
-                LatLng mylocation = new LatLng(locate.getLat(),locate.getLng());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylocation,
-                        15));
+                    String device = dataSnapshot.getValue(String.class);
+                    db.child(device).child("REALLOCATION").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            LocationGetter locate = dataSnapshot.getValue(LocationGetter.class);
+                            LatLng mylocation = new LatLng(locate.getLat(),locate.getLng());
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 15));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+//                LocationGetter locate = dataSnapshot.getValue(LocationGetter.class);
+//                LatLng mylocation = new LatLng(locate.getLat(),locate.getLng());
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mylocation,
+//                        15));
                 //mMap.addMarker(new MarkerOptions().position(mylocation).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_dog_round)));
             }
 
@@ -69,10 +84,21 @@ public class MapRealtime extends FragmentActivity implements OnMapReadyCallback 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                LocationGetter locate = dataSnapshot.getValue(LocationGetter.class);
-                LatLng mylocation = new LatLng(locate.getLat(),locate.getLng());
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(mylocation).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_dog_round)));
+                String device = dataSnapshot.getValue(String.class);
+                db.child(device).child("REALLOCATION").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        LocationGetter locate = dataSnapshot.getValue(LocationGetter.class);
+                        LatLng mylocation = new LatLng(locate.getLat(),locate.getLng());
+                        mMap.clear();
+                        mMap.addMarker(new MarkerOptions().position(mylocation).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_dog_round)));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override

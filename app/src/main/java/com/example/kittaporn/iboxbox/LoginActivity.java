@@ -23,12 +23,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     EditText emailTx,passTx;
     Button signInBtn,signUpBtn;
     FirebaseAuth mAuth;
     ProgressBar spinner;
+    DatabaseReference db;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseAuth.AuthStateListener mAuthListener;
+        db = FirebaseDatabase.getInstance().getReference("USER");
         emailTx = (EditText) findViewById(R.id.emailTx);
         passTx = (EditText) findViewById(R.id.passTx);
         signInBtn = (Button) findViewById(R.id.signInBtn);
@@ -92,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 spinner.setVisibility(View.INVISIBLE);
                             } else {
-                                Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent toMain = new Intent(LoginActivity.this,MainActivity.class);
                                 startActivity(toMain);
                                 finish();
                                 spinner.setVisibility(View.INVISIBLE);
@@ -135,3 +143,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 }
+

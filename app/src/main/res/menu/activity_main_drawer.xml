@@ -18,5 +18,8 @@
             android:id="@+id/Hospital"
 
             android:title="Hospital" />
+        <item
+            android:id="@+id/Setting"
+            android:title="Setting" />
     </group>
 </menu>

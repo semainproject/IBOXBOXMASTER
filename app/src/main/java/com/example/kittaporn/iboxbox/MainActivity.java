@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.eazegraph.lib.charts.StackedBarChart;
 import org.eazegraph.lib.models.BarModel;
@@ -24,6 +26,7 @@ import org.eazegraph.lib.models.StackedBarModel;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Button see;
+    DatabaseReference db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         see = (Button) findViewById(R.id.seemoreBtn);
+        db = FirebaseDatabase.getInstance().getReference("DOGID");
         see.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +131,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.Hospital) {
             Intent i = new Intent(MainActivity.this , MapHospital.class);
+            startActivity(i);
+        }else if(id == R.id.Setting){
+            Intent i = new Intent(MainActivity.this , DogInformation.class);
+            i.putExtra("pagenumber",1);
             startActivity(i);
         }
 
