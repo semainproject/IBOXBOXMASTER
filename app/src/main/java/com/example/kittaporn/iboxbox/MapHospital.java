@@ -1,13 +1,18 @@
 package com.example.kittaporn.iboxbox;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +27,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -68,7 +74,9 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
                 for (DataSnapshot hosSnapshot : dataSnapshot.getChildren()) {
                     final HospitalMarkerGetter marker = hosSnapshot.getValue(HospitalMarkerGetter.class);
                     LatLng hosMarker = new LatLng(marker.getLat() , marker.getLng());
-                    MarkerOptions markerHospital = new MarkerOptions().position(hosMarker).title(marker.getName());
+                    MarkerOptions markerHospital = new MarkerOptions().position(hosMarker)
+                                                                      .title(marker.getName())
+                                                                      .icon(bitmapDescriptorFromVector(MapHospital.this, R.drawable.ic_hospital_marker));
                     mMap.addMarker(markerHospital);
                     mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                         @Override
@@ -115,7 +123,8 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng firstPosition = new LatLng(13.750 , 100.535);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(firstPosition));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(firstPosition , 7));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(firstPosition));
     }
 
     @Override
@@ -173,7 +182,9 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
         uLng = location.getLongitude();
         final LatLng myPosition = new LatLng(uLat, uLng);
         if(checkMarker == false) {
-            mMap.addMarker(new MarkerOptions().position(myPosition).title("My Position"));
+            mMap.addMarker(new MarkerOptions().position(myPosition)
+                                              .title("My Position")
+                                              .icon(bitmapDescriptorFromVector(MapHospital.this, R.drawable.ic_dot)));
             checkMarker = true;
         }
         myLoc.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +193,15 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition , 15));
             }
         });
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
 }
