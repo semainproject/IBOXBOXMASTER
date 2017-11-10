@@ -13,118 +13,90 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="115dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_dog_round" />
+        android:layout_height="78dp"
+        app:srcCompat="@mipmap/ic_dog_round"
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="5dp" />
 
     <TextView
         android:id="@+id/nameText"
         android:layout_width="184dp"
         android:layout_height="25dp"
-        android:layout_marginTop="93dp"
         android:text="Loading.."
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="93dp" />
 
     <org.eazegraph.lib.charts.StackedBarChart xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/stackedbarchart"
         android:layout_width="332dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="205dp"
         android:padding="10dp"
         android:visibility="visible"
         app:egBarWidth="30dp"
         app:egFixedBarWidth="true"
         app:egLegendHeight="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/seemoreBtn"
-        app:layout_constraintEnd_toStartOf="@+id/restText"
-        app:layout_constraintStart_toStartOf="@+id/restText"
-        app:layout_constraintTop_toBottomOf="@+id/playText" />
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="242dp" />
 
     <TextView
         android:id="@+id/resultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
-        android:layout_marginStart="26dp"
         android:text="Activity Result"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="183dp" />
 
     <Button
         android:id="@+id/seemoreBtn"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
-        android:background="@android:color/transparent"
-        android:text="See ..."
+        android:background="@drawable/button_regis_style"
+        android:text="See More..."
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="135dp"
+        tools:layout_editor_absoluteY="457dp" />
 
     <ImageView
         android:id="@+id/restImage"
         android:layout_width="20dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/restText"
-        app:layout_constraintEnd_toStartOf="@+id/restText"
-        app:layout_constraintStart_toEndOf="@+id/resultText"
-        app:layout_constraintTop_toBottomOf="@+id/resultText"
-        app:srcCompat="@android:color/holo_blue_dark" />
+        android:layout_height="20dp"
+        app:srcCompat="@android:color/holo_blue_dark"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="208dp" />
 
     <ImageView
         android:id="@+id/playImage"
         android:layout_width="20dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginStart="22dp"
-        app:layout_constraintBottom_toBottomOf="@+id/playText"
-        app:layout_constraintEnd_toStartOf="@+id/playText"
-        app:layout_constraintStart_toEndOf="@+id/restText"
-        app:layout_constraintTop_toTopOf="@+id/restImage"
-        app:srcCompat="@android:color/holo_green_light" />
+        android:layout_height="20dp"
+        app:srcCompat="@android:color/holo_green_light"
+        tools:layout_editor_absoluteX="250dp"
+        tools:layout_editor_absoluteY="208dp" />
 
     <TextView
         android:id="@+id/restText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginStart="56dp"
         android:text="Rest"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
-        app:layout_constraintEnd_toStartOf="@+id/playText"
-        app:layout_constraintStart_toStartOf="@+id/imageView3" />
+        tools:layout_editor_absoluteX="191dp"
+        tools:layout_editor_absoluteY="203dp" />
 
     <TextView
         android:id="@+id/playText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="66dp"
-        android:layout_marginTop="203dp"
         android:text="Play"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="203dp" />
 
 
 </android.support.constraint.ConstraintLayout>

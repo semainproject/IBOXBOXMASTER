@@ -40,8 +40,8 @@ public class Signup extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailTx.getText().toString();
-                String password = passwordTx.getText().toString();
+                final String email = emailTx.getText().toString();
+                final String password = passwordTx.getText().toString();
                 if(!email.equals("")&&!password.equals("")){
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -49,7 +49,21 @@ public class Signup extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(Signup.this, "ลงทะเบียนไม่สำรเ็จ", Toast.LENGTH_SHORT).show();
                         }else{
-                            finish();
+                            //finish();
+                            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(Signup.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(Signup.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else {
+                                        Intent toMain = new Intent(Signup.this,DogInformation.class);
+                                        toMain.putExtra("pagenumber",2);
+                                        startActivity(toMain);
+                                        finish();
+                                    }
+                                }
+                            });
                         }
                     }
                 });
