@@ -92,8 +92,6 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
                                                 }
                                         })
                                         .show();
-
-                                Toast.makeText(MapHospital.this , marker.getName() , Toast.LENGTH_LONG).show();
                             }
                             return false;
                         }

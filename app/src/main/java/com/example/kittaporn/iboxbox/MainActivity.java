@@ -14,10 +14,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.eazegraph.lib.charts.StackedBarChart;
 import org.eazegraph.lib.models.BarModel;
@@ -26,7 +32,12 @@ import org.eazegraph.lib.models.StackedBarModel;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Button see;
-    DatabaseReference db;
+    TextView name , result , rest , play;
+    ImageView restImage , playImage;
+    DatabaseReference db , dbDevice;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +45,16 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         see = (Button) findViewById(R.id.seemoreBtn);
+        name = (TextView) findViewById(R.id.nameText);
+        result = (TextView) findViewById(R.id.resultText);
+        rest = (TextView) findViewById(R.id.restText);
+        play = (TextView) findViewById(R.id.playText);
+        restImage = (ImageView) findViewById(R.id.restImage);
+        playImage = (ImageView) findViewById(R.id.playImage);
+
+        uid = user.getUid();
         db = FirebaseDatabase.getInstance().getReference("DOGID");
+        dbDevice = FirebaseDatabase.getInstance().getReference("USER").child(uid).child("device");
         see.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,32 +62,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
-        StackedBarChart mStackedBarChart = (StackedBarChart) findViewById(R.id.stackedbarchart);
+        final StackedBarChart mStackedBarChart = (StackedBarChart) findViewById(R.id.stackedbarchart);
 
-        StackedBarModel s1 = new StackedBarModel("12.4");
-
-        s1.addBar(new BarModel(2.3f, 0xFF63CBB0));
-        s1.addBar(new BarModel(2.3f, 0xFF56B7F1));
-
-        StackedBarModel s2 = new StackedBarModel("13.4");
-        s2.addBar(new BarModel(1.1f, 0xFF63CBB0));
-        s2.addBar(new BarModel(2.7f, 0xFF56B7F1));
-
-        StackedBarModel s3 = new StackedBarModel("14.4");
-
-        s3.addBar(new BarModel(2.3f, 0xFF63CBB0));
-        s3.addBar(new BarModel(2.f, 0xFF56B7F1));
-
-        StackedBarModel s4 = new StackedBarModel("15.4");
-        s4.addBar(new BarModel(1.f, 0xFF63CBB0));
-        s4.addBar(new BarModel(4.2f, 0xFF56B7F1));
-
-        mStackedBarChart.addBar(s1);
-        mStackedBarChart.addBar(s2);
-        mStackedBarChart.addBar(s3);
-        mStackedBarChart.addBar(s4);
-
-        mStackedBarChart.startAnimation();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,6 +72,64 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        dbDevice.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                String deviceID = dataSnapshot.getValue(String.class);
+
+                db.child(deviceID).child("information").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot infoSnapshot) {
+                        DogInformationGetter dogInformation = infoSnapshot.getValue(DogInformationGetter.class);
+                        name.setText(dogInformation.getName());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                db.child(deviceID).child("DATA").limitToLast(7).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot actSnapshot) {
+                        for(DataSnapshot forSnapshot : actSnapshot.getChildren()) {
+
+                            PlayRestGetter playRest = forSnapshot.getValue(PlayRestGetter.class);
+                            String date = forSnapshot.getKey();
+                            String day = "";
+
+                            for(int i=0 ; i<date.length() ; i++) {
+                                if(date.charAt(i) != '-') {
+                                    day = day + date.charAt(i);
+                                } else {
+                                    break;
+                                }
+                            }
+
+                            StackedBarModel bar = new StackedBarModel(day);
+                            bar.addBar(new BarModel(playRest.getPlay() , 0xFF63CBB0));
+                            bar.addBar(new BarModel(playRest.getRest() , 0xFF56B7F1));
+                            mStackedBarChart.addBar(bar);
+                            mStackedBarChart.startAnimation();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
