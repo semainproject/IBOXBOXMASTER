@@ -37,7 +37,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
+        <activity
+            android:name=".DogActivity"
+             />
         <activity
             android:name=".MapRealtime"
             android:label="@string/title_activity_map_realtime" />

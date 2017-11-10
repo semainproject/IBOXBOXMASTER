@@ -1,11 +1,14 @@
 package com.example.kittaporn.iboxbox;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,13 +22,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MapHospital extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
@@ -36,6 +44,7 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
     double uLng;
     FloatingActionButton myLoc;
     DatabaseReference dbMarker;
+    boolean checkMarker = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +66,30 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot hosSnapshot : dataSnapshot.getChildren()) {
-                    HospitalMarkerGetter marker = hosSnapshot.getValue(HospitalMarkerGetter.class);
+                    final HospitalMarkerGetter marker = hosSnapshot.getValue(HospitalMarkerGetter.class);
                     LatLng hosMarker = new LatLng(marker.getLat() , marker.getLng());
-                    mMap.addMarker(new MarkerOptions().position(hosMarker).title(marker.getName()));
+                    MarkerOptions markerHospital = new MarkerOptions().position(hosMarker).title(marker.getName());
+                    mMap.addMarker(markerHospital);
+                    mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker markerOnClick) {
+                            if( markerOnClick.getTitle().equals( marker.getName() ) ) {
+                                new AlertDialog.Builder(MapHospital.this ,  android.R.style.Theme_Material_Light_Dialog_Alert)
+                                        .setTitle("Information")
+                                        .setMessage("Address : " + marker.getInfo() + "\n" + "Tel : " + marker.getTel())
+                                        .setNegativeButton("close" , new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    dialogInterface.dismiss();
+                                                }
+                                        })
+                                        .show();
+
+                                Toast.makeText(MapHospital.this , marker.getName() , Toast.LENGTH_LONG).show();
+                            }
+                            return false;
+                        }
+                    });
                 }
             }
 
@@ -142,14 +172,16 @@ public class MapHospital extends FragmentActivity implements OnMapReadyCallback,
         uLat = location.getLatitude();
         uLng = location.getLongitude();
         final LatLng myPosition = new LatLng(uLat, uLng);
-        mMap.addMarker(new MarkerOptions().position(myPosition).title("My Position"));
+        if(checkMarker == false) {
+            mMap.addMarker(new MarkerOptions().position(myPosition).title("My Position"));
+            checkMarker = true;
+        }
         myLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPosition , 15));
             }
         });
-
     }
 
 }
