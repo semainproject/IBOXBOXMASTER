@@ -32,9 +32,9 @@ import org.eazegraph.lib.models.StackedBarModel;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Button see;
-    TextView name , result , rest , play;
+    TextView name , result , rest , play , dogName , deviceid;
     ImageView restImage , playImage;
-    DatabaseReference db , dbDevice;
+    DatabaseReference db , dbDevice , dbToUser , dbToDevice;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String uid;
 
@@ -52,9 +52,16 @@ public class MainActivity extends AppCompatActivity
         restImage = (ImageView) findViewById(R.id.restImage);
         playImage = (ImageView) findViewById(R.id.playImage);
 
+        NavigationView navigationView2 = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView2.getHeaderView(0);
+
+        dogName = (TextView) headerView.findViewById(R.id.dogname);
+        deviceid = (TextView) headerView.findViewById(R.id.deviceID);
         uid = user.getUid();
         db = FirebaseDatabase.getInstance().getReference("DOGID");
         dbDevice = FirebaseDatabase.getInstance().getReference("USER").child(uid).child("device");
+        dbToUser = FirebaseDatabase.getInstance().getReference("USER").child(uid).child("device");
+        dbToDevice = FirebaseDatabase.getInstance().getReference("DOGID");
         see.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +79,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ////////////////////////////////////////////////////////
+        dbToUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String deviceidIndb = dataSnapshot.getValue(String.class);
+                deviceid.setText(deviceidIndb);
+                dbToDevice.child(deviceidIndb).child("information").child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String dognameIndb = dataSnapshot.getValue(String.class);
+                        dogName.setText(dognameIndb);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        ///////////////////////////////////////////////////////
 
         dbDevice.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
