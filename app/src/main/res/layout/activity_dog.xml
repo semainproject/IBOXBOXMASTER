@@ -10,9 +10,9 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="14dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="29dp"
         android:text="Dog Daily Activity"
@@ -26,68 +26,142 @@
         android:id="@+id/dateBtn"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/ic_calendar"
         app:layout_constraintBottom_toTopOf="@+id/dateTX"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/dateTX"
+        app:layout_constraintStart_toStartOf="@+id/dateTX"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/dateTX"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="152dp"
         android:layout_marginEnd="42dp"
         android:layout_marginStart="42dp"
         android:text="DATE"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
+        app:layout_constraintBottom_toTopOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateBtn" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="265dp"
-        android:layout_marginEnd="43dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="34dp"
-        android:src="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/stackedbarchart" />
-
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="27dp"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="204dp"
         android:text="Please Choose Date"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="@+id/imageView6"
-        app:layout_constraintTop_toTopOf="@+id/imageView6" />
-
-    <org.eazegraph.lib.charts.StackedBarChart xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/stackedbarchart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="85dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginStart="26dp"
-        android:padding="10dp"
-        android:visibility="invisible"
-        app:egBarWidth="20dp"
-        app:egFixedBarWidth="true"
-        app:egLegendHeight="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateTX" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <org.eazegraph.lib.charts.StackedBarChart
+            android:id="@+id/stackedbarchart"
+            android:layout_width="150dp"
+            android:layout_height="264dp"
+            android:layout_marginBottom="96dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginStart="42dp"
+            android:padding="10dp"
+            android:visibility="visible"
+            app:egBarWidth="40dp"
+            app:egFixedBarWidth="true"
+            app:egLegendHeight="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView4"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/playTX"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="190dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView7"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <TextView
+            android:id="@+id/restTX"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="24dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="@+id/playTX"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="33dp"
+            android:text="PLAY"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/playTX"
+            app:layout_constraintEnd_toEndOf="@+id/textView7"
+            app:layout_constraintStart_toStartOf="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/restTX" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="82dp"
+            android:layout_marginTop="255dp"
+            android:text="REST"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/restTX"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/playTX"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="232dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/playTX"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/imageView4"
+            app:srcCompat="@android:color/holo_green_light" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginBottom="59dp"
+            android:layout_marginTop="255dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/imageView5"
+            app:layout_constraintEnd_toStartOf="@+id/playTX"
+            app:layout_constraintStart_toEndOf="@+id/stackedbarchart"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:color/holo_blue_dark" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
