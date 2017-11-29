@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/guncolor"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.kittaporn.iboxbox.MainActivity"
     tools:layout_editor_absoluteY="81dp"
@@ -29,6 +29,7 @@
         android:layout_marginTop="93dp"
         android:text="Loading.."
         android:textAlignment="center"
+        android:textColor="#25383C"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,42 +40,30 @@
         android:id="@+id/stackedbarchart"
         android:layout_width="332dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginBottom="69dp"
+        android:layout_marginTop="59dp"
         android:padding="10dp"
         android:visibility="visible"
         app:egBarWidth="30dp"
         app:egFixedBarWidth="true"
         app:egLegendHeight="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/seemoreBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/restText"
         app:layout_constraintStart_toStartOf="@+id/restText"
-        app:layout_constraintTop_toBottomOf="@+id/playText" />
+        app:layout_constraintTop_toTopOf="@+id/resultText" />
 
     <TextView
         android:id="@+id/resultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
         android:layout_marginStart="26dp"
+        android:layout_marginTop="183dp"
         android:text="Activity Result"
+        android:textColor="#25383C"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/seemoreBtn"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
-        android:background="@android:color/transparent"
-        android:text="See ..."
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/restImage"
@@ -86,7 +75,7 @@
         app:layout_constraintEnd_toStartOf="@+id/restText"
         app:layout_constraintStart_toEndOf="@+id/resultText"
         app:layout_constraintTop_toBottomOf="@+id/resultText"
-        app:srcCompat="@android:color/holo_blue_dark" />
+        app:srcCompat="@color/blue" />
 
     <ImageView
         android:id="@+id/playImage"
@@ -98,7 +87,7 @@
         app:layout_constraintEnd_toStartOf="@+id/playText"
         app:layout_constraintStart_toEndOf="@+id/restText"
         app:layout_constraintTop_toTopOf="@+id/restImage"
-        app:srcCompat="@android:color/holo_green_light" />
+        app:srcCompat="@color/guncolor" />
 
     <TextView
         android:id="@+id/restText"
@@ -108,6 +97,7 @@
         android:layout_marginEnd="56dp"
         android:layout_marginStart="56dp"
         android:text="Rest"
+        android:textColor="#25383C"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
@@ -118,13 +108,41 @@
         android:id="@+id/playText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         android:layout_marginEnd="66dp"
-        android:layout_marginTop="203dp"
         android:text="Play"
+        android:textColor="#25383C"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/stackedbarchart"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="402dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom|center_horizontal"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stackedbarchart"
+        app:srcCompat="@color/guncolor" />
+
+    <Button
+        android:id="@+id/seemoreBtn"
+        android:layout_width="142dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/transparent"
+        android:text="See More .."
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
 
 </android.support.constraint.ConstraintLayout>

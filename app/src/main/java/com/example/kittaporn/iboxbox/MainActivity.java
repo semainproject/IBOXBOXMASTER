@@ -1,6 +1,9 @@
 package com.example.kittaporn.iboxbox;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.eazegraph.lib.charts.StackedBarChart;
 import org.eazegraph.lib.models.BarModel;
 import org.eazegraph.lib.models.StackedBarModel;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -128,22 +134,35 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onDataChange(DataSnapshot actSnapshot) {
                         for(DataSnapshot forSnapshot : actSnapshot.getChildren()) {
-
-                            PlayRestGetter playRest = forSnapshot.getValue(PlayRestGetter.class);
-                            String date = forSnapshot.getKey();
-                            String day = "";
-
-                            for(int i=0 ; i<date.length() ; i++) {
-                                if(date.charAt(i) != '-') {
-                                    day = day + date.charAt(i);
-                                } else {
-                                    break;
+                            float play = 0;
+                            float rest = 0;
+                            for(DataSnapshot playSnapsnot : forSnapshot.getChildren()) {
+                                int playRest = playSnapsnot.getValue(int.class);
+                                if(playRest == 0) {
+                                    rest++;
+                                } else if(playRest == 1) {
+                                    play++;
                                 }
                             }
+                            float playy = play / 60;
+                            float restt = rest / 60;
+                            playy = Float.parseFloat(new DecimalFormat("##.##").format(playy));
+                            restt = Float.parseFloat(new DecimalFormat("##.##").format(restt));
+//                            PlayRestGetter playRest = forSnapshot.getValue(PlayRestGetter.class);
+                            String date = forSnapshot.getKey();
+//                            String day = "";
 
-                            StackedBarModel bar = new StackedBarModel(day);
-                            bar.addBar(new BarModel(playRest.getPlay() , 0xFF63CBB0));
-                            bar.addBar(new BarModel(playRest.getRest() , 0xFF56B7F1));
+//                            for(int i=0 ; i<date.length() ; i++) {
+//                                if(date.charAt(i) != '-') {
+//                                    day = day + date.charAt(i);
+//                                } else {
+//                                    break;
+//                                }
+//                            }
+
+                            StackedBarModel bar = new StackedBarModel(date);
+                            bar.addBar(new BarModel(playy, Color.parseColor("#FEE600")));
+                            bar.addBar(new BarModel(restt , Color.parseColor("#4280C2")));
                             mStackedBarChart.addBar(bar);
                             mStackedBarChart.startAnimation();
                         }

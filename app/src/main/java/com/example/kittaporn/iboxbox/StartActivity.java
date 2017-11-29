@@ -23,11 +23,13 @@ public class StartActivity extends AppCompatActivity {
             progressbar.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(StartActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
         else{
             progressbar.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(StartActivity.this,LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

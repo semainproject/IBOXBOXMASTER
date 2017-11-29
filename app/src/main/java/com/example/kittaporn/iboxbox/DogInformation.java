@@ -64,6 +64,7 @@ public class DogInformation extends AppCompatActivity {
                     DogInformationGetter infomation = new DogInformationGetter(dogname,deviceID);
                     db.child("device").setValue(deviceID);
                     db2.child(deviceID).child("information").setValue(infomation);
+                    FirebaseAuth.getInstance().signOut();
                     finish();
                 }
             });

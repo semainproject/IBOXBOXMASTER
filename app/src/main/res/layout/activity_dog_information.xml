@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_dog_round" />
+        app:srcCompat="@drawable/ic_logo" />
 
     <TextView
         android:id="@+id/textView4"
@@ -27,6 +27,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginStart="35dp"
         android:text="Dog Information"
+        android:textColor="@color/white"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
@@ -40,6 +41,7 @@
         android:layout_marginTop="104dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +54,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="214dp"
         android:text="Name"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +68,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="62dp"
         android:text="Gender"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/checkBox"
@@ -78,6 +82,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="38dp"
         android:text="Male"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintStart_toStartOf="@+id/textView12" />
 
@@ -88,13 +93,14 @@
         android:layout_marginBottom="36dp"
         android:layout_marginEnd="74dp"
         android:text="Female"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/deviceTX"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="91dp"
         android:layout_marginTop="25dp"
         android:clickable="true"
@@ -105,8 +111,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="51dp"
+        android:layout_height="50dp"
         android:layout_marginTop="25dp"
         android:clickable="true"
         app:backgroundTint="@android:color/background_light"
@@ -121,6 +127,9 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="49dp"
         android:text="DeviceID"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -132,6 +141,7 @@
         android:layout_marginTop="9dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 

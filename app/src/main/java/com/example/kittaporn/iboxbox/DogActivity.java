@@ -1,5 +1,6 @@
 package com.example.kittaporn.iboxbox;
 
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,9 @@ import org.eazegraph.lib.charts.StackedBarChart;
 import org.eazegraph.lib.models.BarModel;
 import org.eazegraph.lib.models.StackedBarModel;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -81,8 +84,7 @@ public class DogActivity extends AppCompatActivity {
                     Date date = mCalendar.getTime();
                     final String textDate = dateFormat.format(date);
 //                    dateTx.setText(textDate);
-                    final String dateInsting = String.valueOf(day) +"-"+String.valueOf(month+1)+"-"+String.valueOf(year);
-                   // Toast.makeText(DogActivity.this,dateInsting,Toast.LENGTH_LONG).show();
+                    final String dateInsting = String.valueOf(day)+String.valueOf(month+1)+String.valueOf(year).substring(2,4);
                     dbuser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,21 +93,42 @@ public class DogActivity extends AppCompatActivity {
                                 db.child(device).child("DATA").child(dateInsting).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        float play = 0;
+                                        float rest = 0;
+                                        for(DataSnapshot playSnapsnot : dataSnapshot.getChildren()) {
+                                            int playRest = playSnapsnot.getValue(int.class);
+                                            if(playRest == 0) {
+                                                rest++;
+                                            } else if(playRest == 1) {
+                                                play++;
+                                            }
+                                        }
+                                        float playy = play / 60;
+                                        float restt = rest / 60;
+                                        playy = Float.parseFloat(new DecimalFormat("##.##").format(playy));
+                                        restt = Float.parseFloat(new DecimalFormat("##.##").format(restt));
                                         try {
-                                            PlayRestGetter data = dataSnapshot.getValue(PlayRestGetter.class);
-                                            if (dataSnapshot != null) {
+                                            //PlayRestGetter data = dataSnapshot.getValue(PlayRestGetter.class);
+                                            if (dataSnapshot != null && (play != 0 || rest != 0)) {
                                                 //img.setVisibility(View.INVISIBLE);
-                                                playTX.setText(String.valueOf(data.getPlay())+" Hours");
-                                                restTX.setText(String.valueOf(data.getRest())+" Hours");
+                                                playTX.setText(String.valueOf(playy)+" Hours");
+                                                restTX.setText(String.valueOf(restt)+" Hours");
                                                 dateTx.setText(textDate);
                                                 tx13.setVisibility(View.INVISIBLE);
                                                 constraintLayout.setVisibility(View.VISIBLE);
                                                 mStackedBarChart.setVisibility(View.VISIBLE);
-                                                StackedBarModel bar = new StackedBarModel(String.valueOf(textDate));
-                                                bar.addBar(new BarModel(data.getPlay(), 0xFF63CBB0));
-                                                bar.addBar(new BarModel(data.getRest(), 0xFF56B7F1));
+                                                StackedBarModel bar = new StackedBarModel(String.valueOf(dateInsting));
+                                                bar.addBar(new BarModel(playy, Color.parseColor("#FEE600")));
+                                                bar.addBar(new BarModel(restt , Color.parseColor("#4280C2")));
                                                 mStackedBarChart.addBar(bar);
                                                 mStackedBarChart.startAnimation();
+                                                Toast.makeText(DogActivity.this,dateInsting,Toast.LENGTH_LONG).show();
+                                            } else {
+                                                tx13.setVisibility(View.VISIBLE);
+                                                dateTx.setText("DATE");
+                                                constraintLayout.setVisibility(View.INVISIBLE);
+                                                Toast.makeText(DogActivity.this,"Please select other date!!",Toast.LENGTH_LONG).show();
                                             }
                                         } catch(Exception e) {
                                             tx13.setVisibility(View.VISIBLE);
@@ -121,7 +144,10 @@ public class DogActivity extends AppCompatActivity {
                                     }
                                 });
                             } catch(Exception e) {
-
+                                tx13.setVisibility(View.VISIBLE);
+                                dateTx.setText("DATE");
+                                constraintLayout.setVisibility(View.INVISIBLE);
+                                Toast.makeText(DogActivity.this,"Please select other date!!",Toast.LENGTH_LONG).show();
                             }
                         }
 
@@ -132,5 +158,8 @@ public class DogActivity extends AppCompatActivity {
                     });
                 }
             };
+    public static float roundToHalf(float x) {
+        return (float) (Math.ceil(x * 2) / 2);
+    }
 
 }
