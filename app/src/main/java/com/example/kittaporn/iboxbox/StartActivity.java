@@ -18,18 +18,33 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         progressbar = (ProgressBar) findViewById(R.id.progressBar3);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            progressbar.setVisibility(View.INVISIBLE);
-            Intent intent = new Intent(StartActivity.this,MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        else{
-            progressbar.setVisibility(View.INVISIBLE);
-            Intent intent = new Intent(StartActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Thread welcomeThread = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    super.run();
+                    sleep(3000);  //Delay of 10 seconds
+                } catch (Exception e) {
+
+                } finally {
+
+                    if (user != null) {
+                        //progressbar.setVisibility(View.INVISIBLE);
+                        Intent intent = new Intent(StartActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        //progressbar.setVisibility(View.INVISIBLE);
+                        Intent intent = new Intent(StartActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+        };
+        welcomeThread.start();
     }
 }

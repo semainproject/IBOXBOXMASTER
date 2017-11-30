@@ -21,6 +21,6 @@
             android:title="Hospital" />
         <item
             android:id="@+id/Setting"
-            android:title="Setting" />
+            android:title="Profile" />
     </group>
 </menu>
