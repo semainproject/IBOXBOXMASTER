@@ -42,6 +42,44 @@ public class DogInformation extends AppCompatActivity {
         fab2 = (FloatingActionButton) findViewById(R.id.cancel);
         Bundle bundle = getIntent().getExtras();
         mCalendar = Calendar.getInstance();
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                female.setChecked(false);
+            }
+
+        });
+        female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                male.setChecked(false);
+            }
+        });
+        db.child("device").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String deviceID = dataSnapshot.getValue(String.class);
+                db2.child(deviceID).child("information").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        DogInformationGetter info = dataSnapshot.getValue(DogInformationGetter.class);
+                        name.setText(info.getName().toString());
+                        device.setText(info.getDeviceID().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         if (bundle != null) {
             int pageCode = bundle.getInt("pagenumber");
             code = pageCode;

@@ -55,6 +55,7 @@
         android:id="@+id/nameTX"
         android:layout_width="228dp"
         android:layout_height="45dp"
+        android:padding="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/edit_text_design"
@@ -98,6 +99,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:buttonTint="@color/blue"
+        android:checked="true"
         android:text="Male"
         android:textColor="#000"
         app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -155,6 +157,7 @@
     <EditText
         android:id="@+id/deviceTX"
         android:layout_width="228dp"
+        android:padding="10dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
